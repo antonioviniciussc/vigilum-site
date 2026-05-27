@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vigilum — Tecnologia e Segurança</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07090f;
+    --bg2: #0d1120;
+    --bg3: #111827;
+    --accent: #00d4ff;
+    --accent2: #0066ff;
+    --text: #f0f4ff;
+    --muted: #8896b0;
+    --border: rgba(0,212,255,0.15);
+    --card: rgba(255,255,255,0.04);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(7,9,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent); }
+  nav ul {
+    list-style: none;
+    display: flex; gap: 2.5rem;
+  }
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #07090f !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    transition: opacity .2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; color: #07090f !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,102,255,0.18) 0%, transparent 70%);
+    right: -100px; top: -100px;
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.10) 0%, transparent 70%);
+    left: -50px; bottom: 100px;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 780px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.3);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 580px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent);
+    color: #07090f;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: opacity .2s, transform .2s;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text);
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: border-color .2s, transform .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .hero-stats {
+    margin-top: 4rem;
+    display: flex; gap: 3rem; flex-wrap: wrap;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.3rem;
+  }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 560px;
+    line-height: 1.75;
+  }
+  .section-header { margin-bottom: 3.5rem; }
+
+  /* SOBRE */
+  .sobre { background: var(--bg2); }
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .sobre-visual {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--bg3);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sobre-icon {
+    font-size: 6rem;
+    opacity: 0.15;
+  }
+  .sobre-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    width: 100%;
+    top: 40%;
+    animation: scan 3s linear infinite;
+  }
+  @keyframes scan {
+    0% { top: 10%; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { top: 90%; opacity: 0; }
+  }
+  .sobre-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .tag {
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--accent);
+    padding: 0.3rem 0.85rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .mvv { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+  .mvv-item {
+    padding: 1.25rem 1.5rem;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+  }
+  .mvv-item strong {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .mvv-item p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* SERVIÇOS */
+  .servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: border-color .25s, transform .25s;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-color: rgba(0,212,255,0.35);
+    transform: translateY(-4px);
+  }
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(0,212,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .service-icon svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+  .service-card p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
+  .service-tag {
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+
+  /* PROJETOS */
+  .projetos { background: var(--bg2); }
+  .projetos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .projeto-card {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: border-color .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .projeto-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .projeto-card:hover { border-color: rgba(0,212,255,0.25); }
+  .projeto-card:hover::before { opacity: 1; }
+  .projeto-badge {
+    display: inline-block;
+    background: rgba(0,102,255,0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(96,165,250,0.25);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .projeto-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .projeto-card p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* INFRAESTRUTURA */
+  .infra-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .infra-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .infra-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .infra-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(0,212,255,0.6);
+  }
+  .cert-box {
+    background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(0,102,255,0.08));
+    border: 1px solid rgba(0,212,255,0.2);
+    border-radius: 14px;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .cert-icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 1.5rem;
+    background: rgba(0,212,255,0.12);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cert-icon svg { width: 36px; height: 36px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+  .cert-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .cert-box p { color: var(--muted); font-size: 0.9rem; }
+
+  /* CONTATO */
+  .contato { background: var(--bg2); }
+  .contato-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contato-inner h2 { margin-bottom: 1rem; }
+  .contato-inner .section-desc { margin: 0 auto 3rem; }
+  .contato-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+  .contato-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+  }
+  .contato-card svg {
+    width: 28px; height: 28px;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 1.5;
+    margin-bottom: 0.75rem;
+  }
+  .contato-card .contato-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .contato-card .contato-val {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* PRIVACY MODAL */
+  .privacy-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+    padding: 1.5rem;
+  }
+  .privacy-overlay.open { display: flex; }
+  .privacy-modal {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    max-width: 780px; width: 100%;
+    max-height: 88vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .privacy-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.75rem 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+  }
+  .privacy-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .privacy-header h3 span { color: var(--accent); }
+  .privacy-close {
+    background: rgba(255,255,255,0.07);
+    border: none; cursor: pointer;
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    transition: background .2s, color .2s;
+    flex-shrink: 0;
+  }
+  .privacy-close:hover { background: rgba(0,212,255,0.15); color: var(--accent); }
+  .privacy-body {
+    overflow-y: auto;
+    padding: 2rem;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,212,255,0.3) transparent;
+  }
+  .privacy-body::-webkit-scrollbar { width: 5px; }
+  .privacy-body::-webkit-scrollbar-track { background: transparent; }
+  .privacy-body::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.3); border-radius: 10px; }
+  .privacy-date {
+    display: inline-block;
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    border-radius: 100px;
+    padding: 0.25rem 0.85rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+  .privacy-body p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .privacy-body h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 1.75rem 0 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--accent);
+  }
+  .privacy-body .privacy-item {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+  .privacy-body .privacy-item strong { color: var(--text); }
+  .privacy-footer-bar {
+    padding: 1.25rem 2rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; gap: 1rem; flex-wrap: wrap;
+  }
+  .privacy-footer-bar p { font-size: 0.8rem; color: var(--muted); }
+  .privacy-footer-bar a { color: var(--accent); text-decoration: none; }
+  .privacy-footer-bar .btn-primary { padding: 0.6rem 1.4rem; font-size: 0.85rem; }
+
+  /* FOOTER */
+  footer {
+    padding: 2.5rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  footer p { color: var(--muted); font-size: 0.82rem; }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--text);
+  }
+  .footer-logo span { color: var(--accent); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .sobre-grid, .infra-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <img src="img/LOGO VIGILUM - NEGATIVO.png" alt="Vigilum" style="height:38px; width:auto; display:block;">
+  </a>
+  <ul>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#infraestrutura">Infraestrutura</a></li>
+    <li><a href="#contato" class="nav-cta">Contato</a></li>
+  </ul>
+</nav>
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Certificada CREA-PE</div>
+    <h1>
+      Segurança inteligente<br>
+      para a sua <em>operação</em>
+    </h1>
+    <p class="hero-sub">
+      Tecnologia de ponta em videomonitoramento, controle de acesso e automação predial. 
+      Deixe a segurança conosco e foque no que realmente importa: o seu negócio.
+    </p>
+    <div class="hero-actions">
+      <a href="#servicos" class="btn-primary">
+        Ver soluções
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contato" class="btn-outline">Falar com um especialista</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">1.200<span>+</span></div>
+        <div class="stat-label">Câmeras IP instaladas</div>
+      </div>
+      <div>
+        <div class="stat-num">10<span>+</span></div>
+        <div class="stat-label">Grandes projetos</div>
+      </div>
+      <div>
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Integração com IA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div>
+      <p class="section-label">Quem Somos</p>
+      <h2>Tecnologia e segurança que trabalham por você</h2>
+      <p style="color:var(--muted); line-height:1.75; margin-top:1rem;">
+        Somos uma empresa especializada em tecnologia voltada para a segurança organizacional e serviços terceirizados. 
+        Nascemos com o propósito de aliar inovação tecnológica com qualificação de mão de obra, 
+        para que você, cliente, se dedique exclusivamente à atividade fim do seu negócio.
+      </p>
+      <div class="sobre-tags">
+        <span class="tag">Videomonitoramento com IA</span>
+        <span class="tag">Controle de Acesso</span>
+        <span class="tag">Automação Predial</span>
+        <span class="tag">CREA-PE Certificada</span>
+      </div>
+      <div class="mvv">
+        <div class="mvv-item">
+          <strong>Missão</strong>
+          <p>Desenvolver e aplicar técnicas específicas para cada cliente, utilizando tecnologia e segurança baseadas em procedimentos bem estruturados e recursos humanos capacitados.</p>
+        </div>
+        <div class="mvv-item">
+          <strong>Visão</strong>
+          <p>Tornar-se referência regional pela qualidade e eficiência em tecnologia e segurança, garantindo a satisfação dos clientes e colaboradores.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sobre-visual">
+        <div class="sobre-line"></div>
+        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="section-header">
+    <p class="section-label">Soluções</p>
+    <h2>O que oferecemos</h2>
+    <p class="section-desc">Soluções completas, do projeto à manutenção, integrando hardware, software e inteligência artificial.</p>
+  </div>
+  <div class="servicos-grid">
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M12 9V7M12 17v-2M9 12H7M17 12h-2"/></svg>
+      </div>
+      <h3>Videomonitoramento Inteligente</h3>
+      <p>Plataforma unificada com câmeras IP, IA embarcada, leitura de placas e gestão centralizada de imagens.</p>
+      <div class="service-tags">
+        <span class="service-tag">Câmeras IP</span>
+        <span class="service-tag">IA embarcada</span>
+        <span class="service-tag">LPR</span>
+        <span class="service-tag">Software VMS</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <h3>Controle de Acesso</h3>
+      <p>Sistemas modernos com reconhecimento facial, leitoras biométricas, totem de autoatendimento e controle de pedestres e veículos.</p>
+      <div class="service-tags">
+        <span class="service-tag">Facial</span>
+        <span class="service-tag">Biometria</span>
+        <span class="service-tag">Totem</span>
+        <span class="service-tag">Elevadores</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <h3>Alarme e Detecção de Incêndio</h3>
+      <p>Sistemas de detecção e alarme de intrusão e incêndio com integração completa e conformidade às normas técnicas.</p>
+      <div class="service-tags">
+        <span class="service-tag">Intrusão</span>
+        <span class="service-tag">Incêndio</span>
+        <span class="service-tag">Proteção perimetral</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      </div>
+      <h3>Automação Predial</h3>
+      <p>Gestão inteligente do prédio com controle de energia, automação de ambientes, medição individualizada de água e gás.</p>
+      <div class="service-tags">
+        <span class="service-tag">BMS</span>
+        <span class="service-tag">Energia</span>
+        <span class="service-tag">Água e Gás</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M5 12H3m18 0h-2M12 5V3M12 21v-2M6.34 7.66 4.93 6.25M19.07 19.07l-1.41-1.41M6.34 16.34l-1.41 1.41M19.07 4.93l-1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg>
+      </div>
+      <h3>Telefonia IP e Rede de Dados</h3>
+      <p>Infraestrutura completa com cabeamento estruturado, fibra óptica, rede Wi-Fi corporativa e telefonia IP.</p>
+      <div class="service-tags">
+        <span class="service-tag">VoIP</span>
+        <span class="service-tag">Wi-Fi</span>
+        <span class="service-tag">Fibra Óptica</span>
+        <span class="service-tag">Cabeamento</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <h3>Projetos e Integração de Sistemas</h3>
+      <p>Da concepção à implantação: integramos videomonitoramento, controle de acesso, alarmes e automação em uma solução unificada.</p>
+      <div class="service-tags">
+        <span class="service-tag">PMOC</span>
+        <span class="service-tag">Integração</span>
+        <span class="service-tag">Manutenção</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section class="projetos" id="projetos">
+  <div class="section-header">
+    <p class="section-label">Casos de Sucesso</p>
+    <h2>Projetos realizados</h2>
+    <p class="section-desc">Referências de excelência em segurança eletrônica no Recife e Pernambuco.</p>
+  </div>
+  <div class="projetos-grid">
+
+    <div class="projeto-card">
+      <span class="projeto-badge">Videomonitoramento</span>
+      <h3>Shopping RioMar Recife</h3>
+      <p>Contrato de manutenção periódica com mão de obra residente. Plataforma ENDURA/VIDEOEXPERT-PELCO com mais de 1.200 câmeras IP.</p>
+    </div>
+
+    <div class="projeto-card">
+      <span class="projeto-badge">IA + Controle de Acesso</span>
+      <h3>Condomínio Praia de Guadalupe</h3>
+      <p>Implantação de moderno sistema de videomonitoramento com inteligência artificial para perímetro e controle de acesso integrado.</p>
+    </div>
+
+    <div class="projeto-card">
+      <span class="projeto-badge">Sistema Completo</span>
+      <h3>Empresarial RioMar Trade Center 4/5</h3>
+      <p>Manutenção residente de videomonitoramento, controle de acesso, sonorização, rede Wi-Fi, dados, incêndio, automação, medição e telefonia IP.</p>
+    </div>
+
+    <div class="projeto-card">
+      <span class="projeto-badge">Reconhecimento Facial</span>
+      <h3>Sistema de Controle de Acesso</h3>
+      <p>Implantação de controle de acesso com leitoras faciais e integração com chamada antecipada dos elevadores.</p>
+    </div>
+
+    <div class="projeto-card">
+      <span class="projeto-badge">Centro de Distribuição</span>
+      <h3>Armazenna 4 — Amazon</h3>
+      <p>Implantação do sistema de videomonitoramento com IA para perímetro e controle de acesso com reconhecimento facial.</p>
+    </div>
+
+    <div class="projeto-card">
+      <span class="projeto-badge">Modernização</span>
+      <h3>Armazenna 2, 3, 4 e 5 — SUAPE</h3>
+      <p>Videomonitoramento com inteligência artificial para perímetro e modernização do parque tecnológico existente em múltiplas unidades.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- INFRAESTRUTURA -->
+<section id="infraestrutura">
+  <div class="infra-grid">
+    <div>
+      <p class="section-label">Infraestrutura</p>
+      <h2>Do cabeamento à automação predial</h2>
+      <p class="section-desc">Soluções de ponta a ponta só são possíveis com uma base sólida. Oferecemos estrutura que alia hardware ao software.</p>
+      <div class="infra-list">
+        <div class="infra-item"><div class="infra-dot"></div>Cabeamento estruturado</div>
+        <div class="infra-item"><div class="infra-dot"></div>Sistema de detecção e alarme de incêndio</div>
+        <div class="infra-item"><div class="infra-dot"></div>Telefonia IP</div>
+        <div class="infra-item"><div class="infra-dot"></div>Instalações elétricas de média e baixa tensão</div>
+        <div class="infra-item"><div class="infra-dot"></div>Medição de energia elétrica, água e gás</div>
+        <div class="infra-item"><div class="infra-dot"></div>Sistema de automação predial</div>
+      </div>
+    </div>
+    <div>
+      <div class="cert-box">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Empresa Certificada</h3>
+        <p style="font-size:1.1rem; font-weight:600; color:var(--accent); margin: 0.5rem 0;">CREA-PE</p>
+        <p>Todos os nossos projetos de infraestrutura e instalações elétricas são conduzidos com certificação e responsabilidade técnica registrada no CREA-PE.</p>
+        <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.08);">
+          <p style="color:var(--muted); font-size:0.85rem;">Profissionais treinados, qualificados e certificados para atender cada necessidade do seu negócio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="contato-inner">
+    <p class="section-label">Fale Conosco</p>
+    <h2>Pronto para proteger<br>sua operação?</h2>
+    <p class="section-desc">Entre em contato com nossos especialistas e descubra a solução ideal para o seu negócio.</p>
+    <div class="contato-cards">
+
+      <div class="contato-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <div class="contato-label">Telefone</div>
+        <div class="contato-val">(81) 3463-1081<br>(81) 99795-0035</div>
+      </div>
+
+      <div class="contato-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <div class="contato-label">E-mail</div>
+        <div class="contato-val">comercial@vigilum.com.br</div>
+      </div>
+
+      <div class="contato-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <div class="contato-label">Endereço</div>
+        <div class="contato-val">Av. República do Líbano, 251<br>Sala 1614 — RioMar Trade Center T4<br>Pina, Recife — PE</div>
+      </div>
+
+    </div>
+    <a href="mailto:comercial@vigilum.com.br" class="btn-primary" style="display:inline-flex;">
+      Enviar mensagem
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo">
+   <img src="img/LOGO VIGILUM - NEGATIVO.png" alt="Vigilum" style="height:48px; width:auto; display:block;">
+  </a>
+  <p style="margin-top:0.75rem;">
+    <a href="#" onclick="document.getElementById('privacyModal').classList.add('open'); return false;"
+       style="color:var(--muted); font-size:0.82rem; text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:1px; transition:color .2s;"
+       onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+      Política de Privacidade
+    </a>
+  </p>
+</footer>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="privacy-overlay" id="privacyModal" onclick="if(event.target===this) this.classList.remove('open')">
+  <div class="privacy-modal">
+    <div class="privacy-header">
+      <h3>Política de <span>Privacidade</span></h3>
+      <button class="privacy-close" onclick="document.getElementById('privacyModal').classList.remove('open')" aria-label="Fechar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="privacy-body">
+      <span class="privacy-date">Válida a partir de 05 de maio de 2025</span>
+
+      <p>A Vigilum, Pessoa jurídica de direito privado, leva a privacidade do usuário a sério e zela pela segurança e proteção de dados de todos os seus clientes, parceiros, fornecedores e usuários. Esta Política de Privacidade destina-se a informar o usuário sobre o modo como a Vigilum utiliza e divulga informações coletadas em serviços prestados por ela.</p>
+
+      <p>Ao fazer uso dos serviços da Vigilum, enviar comunicações ou fornecer qualquer tipo de dado pessoal, o usuário declara estar ciente dos termos aqui previstos e de acordo com esta política, que descreve as finalidades e formas de tratamento de seus dados pessoais.</p>
+
+      <p>Em caso de dúvidas, entre em contato pelo e-mail <a href="mailto:contato@vigilum.com.br" style="color:var(--accent)">contato@vigilum.com.br</a>.</p>
+
+      <h4>1. Definições</h4>
+      <div class="privacy-item"><strong>1.1 ANPD</strong> — Autoridade Nacional de Proteção de Dados, órgão responsável pela fiscalização da LGPD.</div>
+      <div class="privacy-item"><strong>1.2 Titular</strong> — Pessoa natural a quem se referem os Dados Pessoais tratados.</div>
+      <div class="privacy-item"><strong>1.3 Dados Pessoais</strong> — Qualquer informação que identifique ou possa identificar uma pessoa natural (nome, CPF, endereço, IP, dados de veículos etc.).</div>
+      <div class="privacy-item"><strong>1.4 Dados Pessoais Sensíveis</strong> — Informações sobre origem racial/étnica, convicção religiosa, opinião política, saúde, vida sexual, dados genéticos ou biométricos.</div>
+      <div class="privacy-item"><strong>1.5 Tratamento</strong> — Toda operação realizada com dados pessoais: coleta, armazenamento, uso, transmissão, eliminação, entre outros.</div>
+      <div class="privacy-item"><strong>1.6 Consentimento</strong> — Manifestação livre e inequívoca pela qual o Titular concorda com o tratamento de seus dados para uma finalidade determinada.</div>
+      <div class="privacy-item"><strong>1.7 LGPD</strong> — Lei nº 13.709/2018 — Lei Geral de Proteção de Dados Pessoais.</div>
+
+      <h4>2. Uso de Dados Pessoais</h4>
+      <p>A Vigilum coleta e usa Dados Pessoais para gerenciar o relacionamento com o usuário e melhor atendê-lo. Entre as finalidades:</p>
+      <div class="privacy-item">Viabilizar o acesso a sistemas e serviços contratados;</div>
+      <div class="privacy-item">Confirmar ou corrigir informações cadastrais;</div>
+      <div class="privacy-item">Enviar informações de interesse do usuário;</div>
+      <div class="privacy-item">Personalizar a experiência de uso do site e dos serviços;</div>
+      <div class="privacy-item">Cumprir obrigações legais, regulatórias e contratuais;</div>
+      <div class="privacy-item">Detectar e prevenir fraudes e proteger a segurança das operações.</div>
+
+      <h4>3. Dados Coletados</h4>
+      <div class="privacy-item"><strong>Dados de cadastro:</strong> nome, CPF, e-mail, telefone, endereço.</div>
+      <div class="privacy-item"><strong>Dados de navegação:</strong> IP, tipo de dispositivo, navegador, páginas acessadas.</div>
+      <div class="privacy-item"><strong>Dados biométricos:</strong> coletados exclusivamente mediante consentimento específico, conforme art. 11, I, da LGPD.</div>
+      <div class="privacy-item"><strong>Dados de localização:</strong> geolocalização quando o usuário acessa o site ou os serviços da Vigilum.</div>
+      <div class="privacy-item"><strong>Dados anônimos:</strong> informações agregadas para análise e melhoria dos serviços.</div>
+
+      <h4>4. Compartilhamento de Dados</h4>
+      <p>A Vigilum poderá compartilhar Dados Pessoais com parceiros e prestadores de serviço que auxiliem na operação dos sistemas, sempre respeitando os limites desta política e da LGPD. Dados Pessoais Sensíveis <strong style="color:var(--text)">não</strong> são compartilhados com terceiros.</p>
+
+      <h4>5. Transferências Internacionais</h4>
+      <p>Nos termos do art. 33, VIII, da LGPD, o usuário consente com eventuais transferências internacionais de dados, que seguirão sempre os termos desta Política de Privacidade.</p>
+
+      <h4>6. Cookies e Coleta Automática</h4>
+      <div class="privacy-item"><strong>Estritamente necessários:</strong> garantem o funcionamento seguro do site.</div>
+      <div class="privacy-item"><strong>Desempenho:</strong> coletam dados anônimos sobre uso do site para melhorias contínuas.</div>
+      <div class="privacy-item"><strong>Funcionalidade:</strong> lembram preferências do usuário para melhorar a experiência.</div>
+      <div class="privacy-item"><strong>Publicidade:</strong> permitem campanhas segmentadas de acordo com o perfil de uso.</div>
+
+      <h4>7. Direitos do Usuário</h4>
+      <p>O usuário pode, a qualquer momento, solicitar:</p>
+      <div class="privacy-item">Confirmação de que seus dados estão sendo tratados;</div>
+      <div class="privacy-item">Acesso, correção ou eliminação de seus Dados Pessoais;</div>
+      <div class="privacy-item">Portabilidade dos dados a outro prestador de serviços;</div>
+      <div class="privacy-item">Informações sobre compartilhamentos realizados;</div>
+      <div class="privacy-item">Revogação do consentimento a qualquer tempo.</div>
+
+      <h4>8. Segurança dos Dados</h4>
+      <p>A Vigilum adota medidas técnicas e organizacionais previstas pela LGPD para proteger os Dados Pessoais. Em caso de suspeita de comprometimento da segurança, o usuário deve notificar imediatamente a Vigilum pelo e-mail <a href="mailto:contato@vigilum.com.br" style="color:var(--accent)">contato@vigilum.com.br</a>.</p>
+
+      <h4>9. Atualizações desta Política</h4>
+      <p>Modificações serão publicadas neste site com as datas de revisão atualizadas. O uso continuado dos serviços após alterações implica na aceitação dos novos termos.</p>
+
+      <h4>10. Encarregado pelo Tratamento (DPO)</h4>
+      <p>Para exercer seus direitos ou esclarecer dúvidas sobre tratamento de Dados Pessoais, entre em contato pelo e-mail <a href="mailto:contato@vigilum.com.br" style="color:var(--accent)">contato@vigilum.com.br</a>.</p>
+    </div>
+    <div class="privacy-footer-bar">
+      <p>Dúvidas? <a href="mailto:contato@vigilum.com.br">contato@vigilum.com.br</a></p>
+      <button class="btn-primary" onclick="document.getElementById('privacyModal').classList.remove('open')" style="border:none; cursor:pointer;">Entendido</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('privacyModal').classList.remove('open');
+  });
+</script>
+
+</body>
+</html>
