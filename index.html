@@ -610,6 +610,142 @@
     .sobre-grid, .infra-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     footer { padding: 2rem 1.5rem; }
   }
+/* RESPONSIVIDADE */
+
+@media (max-width: 1024px) {
+
+  nav {
+    padding: 1rem 2rem;
+  }
+
+  .hero,
+  section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .sobre-grid,
+  .infra-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .hero-stats {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+
+  nav {
+    padding: 1rem 1.2rem;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .hero {
+    padding: 7rem 1.2rem 4rem;
+    min-height: auto;
+  }
+
+  section {
+    padding: 4rem 1.2rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .hero-sub,
+  .section-desc {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .servicos-grid,
+  .projetos-grid,
+  .contato-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card,
+  .projeto-card,
+  .contato-card {
+    padding: 1.5rem;
+  }
+
+  .privacy-modal {
+    max-height: 95vh;
+  }
+
+  .privacy-header,
+  .privacy-body,
+  .privacy-footer-bar {
+    padding: 1.2rem;
+  }
+
+  footer {
+    padding: 2rem 1.2rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .logo img {
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  .hero-badge {
+    font-size: 0.68rem;
+  }
+
+  .stat-num {
+    font-size: 1.8rem;
+  }
+
+  .service-card h3,
+  .projeto-card h3 {
+    font-size: 1rem;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
 </style>
 </head>
 <body>
